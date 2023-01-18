@@ -1,0 +1,8 @@
+﻿.idea/
+App/bin/
+App/obj/
+App/Migrations/
+
+App/AngularApp/.angular/
+App/AngularApp/.vscode/
+App/AngularApp/node_modules/

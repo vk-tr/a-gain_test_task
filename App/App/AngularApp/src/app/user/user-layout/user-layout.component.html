@@ -1,0 +1,231 @@
+<main class="main">
+  <form class="userForm" *ngIf="show">
+    <div class="form-group">
+      <input type="hidden" name="id"
+             value="service.formData.id" [(ngModel)]="user.id"/>
+    </div>
+    <div class="form-group">
+      <label for="firstName">FirstName</label>
+      <input type="text" class="form-control" id="firstName" placeholder="FirstName"
+             [(ngModel)]="user.firstName" name="firstName">
+    </div>
+    <div class="form-group">
+      <label for="surname">Surname</label>
+      <input type="text" class="form-control" id="surname" placeholder="Surname"
+             [(ngModel)]="user.surname" name="surname">
+    </div>
+    <div class="form-group">
+      <label for="patronymic">Patronymic</label>
+      <input type="text" class="form-control" id="patronymic" placeholder="patronymic"
+             [(ngModel)]="user.patronymic" name="patronymic">
+    </div>
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" id="country" placeholder="Country"
+             [(ngModel)]="user.country" name="country">
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="city" placeholder="City"
+             [(ngModel)]="user.city" name="city">
+    </div>
+    <div class="form-group">
+      <label for="sex">Sex</label>
+      <select class="form-select" id="sex"
+              [(ngModel)]="user.sex" name="sex">
+        <option [ngValue] = 0>Male</option>
+        <option [ngValue] = 1>Female</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="city">Birth date</label>
+      <input type="date" class="form-control" id="birthDate" placeholder="Birth date"
+             [(ngModel)]="user.birthDate" name="birthDate">
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-2">
+          <button type="submit" class="btn btn-primary" (click)="onSubmitButtonPressed()">Submit</button>
+        </div>
+        <div class="col-lg-2">
+          <button type="submit" class="btn btn-danger" (click)="onCloseButtonPressed()">Close</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+
+  <div class="usersTableContainer">
+    <form class="searchForm" #form="ngForm">
+      <div class="searchFormContainer">
+        <div>
+          <label for="firstName"></label>
+          <input type="text" class="form-control" id="firstNameSearch" placeholder="FirstName"
+                 [(ngModel)]="searchFormData.firstName" name="firstName">
+        </div>
+        <div>
+          <label for="surname"></label>
+          <input type="text" class="form-control" id="surnameSearch" placeholder="Surname"
+                 [(ngModel)]="searchFormData.surname" name="surname">
+        </div>
+        <div>
+          <label for="patronymic"></label>
+          <input type="text" class="form-control" id="patronymicSearch" placeholder="Patronymic"
+                 [(ngModel)]="searchFormData.patronymic" name="patronymic">
+        </div>
+
+        <div class="bthDateSearchField">
+          <label for="birthDate"></label>
+          <input type="date" class="form-control" id="birthDateSearch" placeholder="Birth date"
+                 [(ngModel)]="searchBirthDate" name="birthDate">
+        </div>
+      </div>
+      <div class="searchFormContainer">
+        <div>
+          <button type="submit" class="btn btn-primary" (click)="onSearchButtonPressed()">Search</button>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-danger" (click)="onResetButtonPressed(form)">Reset</button>
+        </div>
+        <input class="form-check-input" type="checkbox" value="" id="exactMatchChk"
+               [(ngModel)]="isExactMatch"
+               name="isExactMatch">
+        <div class="form-group">
+          <label class="form-check-label" for="exactMatchChk">
+            Exact match
+          </label>
+        </div>
+      </div>
+    </form>
+    <div class="ctrlBtnsContainer">
+      <button type="button" class="btn btn-primary" (click)="onShowForm()">Add new user</button>
+      <button type="button" class="btn btn-danger" (click)="onResetSortButtonPressed()">Reset sort</button>
+    </div>
+    <div class="usersTable">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <td>
+            FirstName
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('firstName')">Sort</button>
+          </td>
+          <td>
+            Surname
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('surname')">Sort</button>
+          </td>
+          <td>
+            Patronymic
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('patronymic')">Sort</button>
+          </td>
+          <td>
+            Country
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('country')">Sort</button>
+          </td>
+          <td>
+            City
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('city')">Sort</button>
+          </td>
+          <td>
+            Sex
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('sex')">Sort</button>
+          </td>
+          <td>
+            BirthDate
+            <button type="button" class="btn btn-secondary" (click)="onSortButtonPressed('birthDate')">Sort</button>
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of service.requestBody.body">
+          <td (click)="fillRow(user)">{{user.firstName}}</td>
+          <td (click)="fillRow(user)">{{user.surname}}</td>
+          <td (click)="fillRow(user)">{{user.patronymic}}</td>
+          <td (click)="fillRow(user)">{{user.country}}</td>
+          <td (click)="fillRow(user)">{{user.city}}</td>
+          <td (click)="fillRow(user)">{{this.sexFormat(user.sex)}}</td>
+          <td (click)="fillRow(user)">{{this.dateFormat(user.birthDate)}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="onEditButtonPress(user)">Edit</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" (click)="onDeleteButtonPress(user.id)">Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="paginationContainer">
+      <div class="row">
+        <div class="col">
+          <label>Page size</label>
+          <select id="select" class="form-select" [(ngModel)]="selectedPageSize" (change)="onChangePageSize()">
+            <option [value]=10>10</option>
+            <option *ngFor="let pageSize of pageSizes">
+              {{ pageSize }}
+            </option>
+          </select>
+          <nav class="navBtns">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link"
+                   (click)="onPrevPage(0)"
+                   [ngClass]="{'anchor-disable'
+                    : this.service.requestBody.pagingDto.pageNum == 1}"> << </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link"
+                   (click)="onPrevPage(1)"
+                   [ngClass]="{'anchor-disable'
+                    : this.service.requestBody.pagingDto.pageNum - 1 < 1}"> < </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link"
+                   (click)="onNextPage(1)"
+                   [ngClass]="{'anchor-disable'
+                    : this.service.requestBody.pagingDto.pageNum + 1 > this.service.requestBody.pagingDto.pagesCount}"> > </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link"
+                   (click)="onNextPage(0)"
+                   [ngClass]="{'anchor-disable'
+                    : this.service.requestBody.pagingDto.pageNum == this.service.requestBody.pagingDto.pagesCount}"> >> </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="col">
+          <label>Go to page</label>
+          <input type="number" class="form-control" id="goToPage" name="goToPage"
+                 [(ngModel)]="goToPageVal">
+          <div>
+            Pages: {{ service.requestBody.pagingDto.pagesCount }}
+          </div>
+          <div>
+            Current page: {{ service.requestBody.pagingDto.pageNum }}
+          </div>
+          <div>
+            Records: {{ service.requestBody.pagingDto.recordsCount }}
+          </div>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-primary"
+                  name="goToPage"
+                  (click)="goToPage()">Go</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-danger" (click)="fillSampleUsers()">FillSampleUsers</button>
+
+  <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-scale-multiple"
+    [fullScreen]="true">
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+</main>
