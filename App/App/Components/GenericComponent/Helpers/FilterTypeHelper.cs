@@ -18,20 +18,5 @@ namespace App.Components.GenericComponent.Helpers
                 }
             }
         }
-
-        public static string GetPropertyName(string property, string type)
-        {
-            switch (type)
-            {
-                case "date":
-                {
-                    return property;
-                }
-                default:
-                {
-                    return property;
-                }
-            }
-        }
     }
 }

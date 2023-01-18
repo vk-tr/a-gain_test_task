@@ -23,7 +23,7 @@ namespace App.Components.GenericComponent.Extensions
                 .Select(filterExpr =>
                     DynamicExpressions.DynamicExpressions
                         .GetPredicate<TEntity>(
-                            FilterTypeHelper.GetPropertyName(filterExpr.Property, filterExpr.Type),
+                            filterExpr.Property,
                             FilterOperatorJsConverter.Convert(filterExpr.Operator),
                             FilterTypeHelper.ChangeType(filterExpr.Value, filterExpr.Type)
                             ))
